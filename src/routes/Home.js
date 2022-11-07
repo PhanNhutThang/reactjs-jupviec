@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Home extends Component {
@@ -8,7 +8,6 @@ class Home extends Component {
         const { isLoggedIn } = this.props;
         //let linkToRedirect = isLoggedIn ? '/system/user-manage' : '/login';
         let linkToRedirect = isLoggedIn ? '/system/user-manage' : '/home';
-
         return (
             <Redirect to={linkToRedirect} />
         );

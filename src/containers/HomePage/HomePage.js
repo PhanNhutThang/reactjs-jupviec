@@ -3,17 +3,18 @@ import { connect } from 'react-redux';
 import HomeHeader from './HomeHeader';
 
 
+
 class HomePage extends Component {
 
     render() {
         return (
            <div>
                 <HomeHeader/>
-                <div style={{height: '500px'}}> </div>
+         
+                {/* <div style={{height: '500px'}}> </div> */}
            </div>
         );
     }
-
 }
 
 const mapStateToProps = state => { 

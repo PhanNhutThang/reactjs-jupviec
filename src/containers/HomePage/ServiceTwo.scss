@@ -1,0 +1,297 @@
+.home-header-container {
+    height: 85px;
+    width: 100%;
+    padding: 0 50px;
+    //border: 1px solid rgb(255, 38, 0);
+
+    .home-headera {
+        width: 100%;
+        height: 400%;
+        display: flex;
+        margin-top: 5%;
+        background: white;
+
+
+        .home-header-image {
+            width: 50%;
+            height: 100%;
+            //border: 1px solid rgb(202, 73, 22);
+        }
+
+        .home-header-text {
+            width: 50%;
+            height: 100%;
+            margin-top: 3%;
+            //border: 1px solid rgb(7, 58, 10);
+
+            .text-header {
+                font-size: 30px;
+            }
+
+            .text-content {
+                font-size: 18px;
+                text-align: justify;
+                margin-top: 2%;
+            }
+        }
+
+    }
+
+    .home-header1a {
+        width: 100%;
+        height: 700%;
+        // border: 1px solid blue;
+        display: flex;
+        margin-top: 7%;
+
+        .home-header-image1 {
+            width: 60%;
+            height: 150%;
+            //border: 1px solid rgb(168, 19, 19);
+        }
+
+        .home-header-text1 {
+            width: 50%;
+            height: 100%;
+            //border: 1px solid rgb(7, 58, 10);
+
+            .text-header {
+                font-size: 30px;
+                margin-left: 10%;
+                margin-top: 5%;
+            }
+
+            .text-header-content {
+                font-size: 22px;
+                margin-left: 10%;
+                margin-top: 4%;
+                margin-bottom: 2%;
+
+            }
+
+            .text-content {
+                font-size: 18px;
+                margin-left: 16%;
+                text-align: justify;
+            }
+        }
+
+    }
+
+    .home-header2a {
+        width: 100%;
+        height: 400%;
+        //border: 1px solid blue;
+        display: flex;
+        margin-top: 15%;
+
+        .home-header-image2 {
+            width: 50%;
+            height: 100%;
+            margin-left: 3%;
+            //border: 1px solid rgb(168, 19, 19);
+        }
+
+        .home-header-text2 {
+            width: 50%;
+            height: 100%;
+            //border: 1px solid rgb(7, 58, 10);
+            margin-top: 5%;
+
+            .text-header {
+                font-size: 30px;
+            }
+
+            .text-content {
+                font-size: 18px;
+                margin-left: 5%;
+                margin-top: 3%;
+            }
+        }
+
+    }
+
+    .home-header3a {
+        width: 100%;
+        height: 400%;
+        //border: 1px solid blue;
+        display: flex;
+        margin-top: 5%;
+
+        .home-header-image3 {
+            width: 50%;
+            height: 100%;
+            //border: 1px solid rgb(168, 19, 19);
+        }
+
+        .home-header-text3 {
+            width: 50%;
+            height: 100%;
+            //border: 1px solid rgb(7, 58, 10);
+
+            .text-header {
+                font-size: 30px;
+                margin-left: 10%;
+                margin-top: 5%;
+            }
+
+            .text-content {
+                font-size: 18px;
+                margin-left: 15%;
+                margin-top: 3%;
+            }
+        }
+
+    }
+
+    .home-header4a {
+        width: 100%;
+        height: 400%;
+        //border: 1px solid blue;
+        display: flex;
+        margin-top: 5%;
+
+        .home-header-image4 {
+            width: 50%;
+            height: 100%;
+            //border: 1px solid rgb(168, 19, 19);
+        }
+
+        .home-header-text4 {
+            width: 50%;
+            height: 100%;
+            //border: 1px solid rgb(7, 58, 10);
+
+            .text-header {
+                font-size: 30px;
+
+                margin-top: 10%;
+            }
+
+            .text-content {
+                font-size: 18px;
+                margin-left: 5%;
+                margin-top: 3%;
+            }
+        }
+
+    }
+
+    .text-advange {
+        margin-top: 5%;
+        font-size: 30px;
+        margin-left: 11%;
+    }
+
+    .home-header5a {
+        width: 100%;
+        height: 400%;
+        //border: 1px solid blue;
+        display: flex;
+        margin-top: 2%;
+
+        .home-header-image5 {
+            width: 50%;
+            height: 100%;
+            //border: 1px solid rgb(168, 19, 19);
+            margin-left: 10px;
+            margin-right: 10px;
+
+
+            .home-header-image5s {
+                // border: 1px solid rgb(168, 98, 19);
+                width: 100%;
+                height: 50%;
+
+
+            }
+
+            .home-header-image5z {
+                //border: 1px solid rgb(41, 19, 168);
+                width: 100%;
+                height: 50%;
+                font-size: 18px;
+                text-align: center
+            }
+
+        }
+
+        .home-header-text5 {
+            width: 50%;
+            height: 100%;
+            border: 1px solid rgb(7, 58, 10);
+        }
+
+    }
+
+    .home-header6 {
+        width: 100%;
+        height: 400%;
+        border: 1px solid blue;
+        display: flex;
+        margin-top: 5%;
+
+        .home-header-image6 {
+            width: 50%;
+            height: 100%;
+            border: 1px solid rgb(168, 19, 19);
+        }
+
+        // .home-header-text6a {
+        //     width: 50%;
+        //     height: 100%;
+        //     border: 1px solid rgb(7, 58, 10);
+        // }
+    }
+
+    .guide {
+        font-size: 30px;
+        text-align: center;
+        margin-top: 5%;
+    }
+
+    .service-booking-instruction {
+        height: 500%;
+        width: 100%;
+        //border: 1px solid #0fbfeb;
+        display: flex;
+        margin-top: 4%;
+        margin-bottom: 5%;
+
+        .image {
+            height: 100%;
+            width: 28%;
+            //border: 1px solid #760feb;
+        }
+
+        .option {
+            height: 100%;
+            width: 50%;
+            //border: 1px solid #eb0fbb;
+
+            .option-one {
+                height: 30%;
+                width: 100%;
+                //border: 1px solid #eb0fbb;
+                display: flex;
+                // margin-top: 2%;
+                margin-left: 30%;
+
+                .option-one-img {
+                    width: 25%;
+                    height: 100%;
+                    // border: 1px solid #0feb72;
+                }
+
+                .option-one-text {
+                    width: 70%;
+                    height: 100%;
+                    //border: 1px solid #cc0d27;
+                    font-size: 18px;
+                    margin-top: 5%;
+                    margin-right: 8%;
+                }
+            }
+        }
+    }
+}

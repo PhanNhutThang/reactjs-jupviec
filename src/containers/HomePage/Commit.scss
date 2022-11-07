@@ -1,0 +1,38 @@
+.home-header-container {
+    height: 85px;
+    width: 100%;
+    padding: 0 50px;
+
+    .camket1 {
+        font-size: 30px;
+        margin-top: 3%;
+        text-align: center;
+    }
+
+    .content1 {
+        font-size: 16px;
+        text-align: justify;
+        padding: 0 30px;
+        border: none;
+
+        .text-I1 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        .text-11 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        .text-a1 {
+            margin-bottom: 10px;
+            margin-top: 10px;
+            margin-left: 35px;
+        }
+    }
+
+}
