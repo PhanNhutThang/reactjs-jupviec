@@ -13,7 +13,7 @@
     .content {
         height: 300%;
         width: 80%;
-        border: 1px solid blue;
+        //border: 1px solid blue;
         display: flex;
         margin-left: 10%;
         margin-top: 3%;
@@ -21,15 +21,15 @@
 
         .content-image {
             height: 100%;
-            width: 50%;
-            border: 1px solid rgb(255, 0, 179);
+            width: 46%;
+            //border: 1px solid rgb(255, 0, 179);
         }
 
         .content-text {
             height: 100%;
             width: 50%;
             margin-left: 2%;
-            border: 1px solid rgb(0, 255, 0);
+            //border: 1px solid rgb(0, 255, 0);
 
             .header-text {
                 font-size: 19px;
