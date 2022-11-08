@@ -1,0 +1,70 @@
+.home-header-container {
+    height: 85px;
+    width: 100%;
+    padding: 0 50px;
+    .tabs{
+        height: 1200%;
+        width: 100%;
+        .noidungGioiThieu{
+            text-align: center;
+            color: #808080;
+            font-size:13pt;
+            
+        }
+
+        .sumenh{
+            margin-top: 30px;
+        }
+        .container-sumenh{
+            .container-sumenh-one{
+                width: 50%;
+                height: 100%;
+                margin-top: 30px;
+                float: left;
+            }
+            .container-sumenh-two{
+                width: 50%;
+                height:100%;
+                float: right;
+                margin-top: 30px;
+            }
+            .sanpham{
+                margin-top: 30px;
+            }
+        }
+        .container-sanpham{
+            border: 1px solid blue;
+        }
+        .chungnhan{
+            margin-top: 10px;
+        }
+        .noidungDaoTao{
+            text-align: left;
+            margin-left: 15%;
+            color: #808080;
+            font-size:13pt;
+        }
+    }
+    .noidungCamKet{
+        text-align: justify;
+        color: #808080;
+        font-size:13pt;
+        margin-left: 60pt;
+        margin-right: 60pt;
+
+    }
+    .noidungCamKet1{
+        margin-top: 10pt;
+        color: black;
+        // font-size:13pt;
+        // margin-left: 60pt;
+        // margin-right: 60pt;
+
+    }
+    
+}
+
+
+
+
+

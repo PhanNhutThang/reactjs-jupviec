@@ -33,6 +33,7 @@ import NewThree from './HomePage/NewsThree';
 import NewsFour from './HomePage/NewsFour';
 import NewFive from './HomePage/NewsFive.js';
 import NewSix from './HomePage/NewsSix.js';
+import GioiThieu from './HomePage/Gioithieu.js';
 
 class App extends Component {
 
@@ -110,6 +111,7 @@ class App extends Component {
                                 <Route path="/le-hoi-halloween"><NewsFour /></Route>
                                 <Route path="/phong-cach-thiet-ke-noi-that"><NewFive /></Route>
                                 <Route path="/phong-cach-an-mac-cuc-dep"><NewSix /></Route>
+                                <Route path="/gioi-thieu"><GioiThieu /></Route>
                             </Switch>
                         </CustomScrollbars>
                     </div>

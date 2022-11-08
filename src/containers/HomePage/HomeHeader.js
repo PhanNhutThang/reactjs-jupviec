@@ -25,7 +25,11 @@ class HomeHeader extends Component {
         return (
             <>
                 <div className='home-header'>
-                    <div className='home-header-one'>GIỚI THIỆU</div>
+                    <div className='home-header-one'>
+                        <Link to="/gioi-thieu" style={{ color: 'black', textDecoration: 'none' }}>
+                            <a>GIỚI THIỆU</a>
+                        </Link>
+                    </div>
                     <div className='home-header-two'>TẢI ỨNG DỤNG</div>
                 </div>
                 <div className='home-header-container'>
