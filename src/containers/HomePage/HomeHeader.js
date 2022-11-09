@@ -21,6 +21,7 @@ import HomeFooter from './HomeFooter';
 import {
     Link
 } from "react-router-dom";
+// <<<<<<< HEAD
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 // class HomeHeader extends Component {
@@ -31,7 +32,10 @@ function HomeHeader() {
     return (
         <>
             <div className='home-header'>
-                <div className='home-header-one'>GIỚI THIỆU</div>
+                <div className='home-header-one'>
+                    <Link to="/gioi-thieu" style={{ color: 'black', textDecoration: 'none' }}>GIỚI THIỆU
+                    </Link>
+                </div>
                 <div className='home-header-two'>TẢI ỨNG DỤNG</div>
             </div>
             <div className='home-header-container'>
@@ -120,6 +124,21 @@ function HomeHeader() {
                             </div>
                         </Modal>
                     </div>
+                    {/* =======
+
+class HomeHeader extends Component {
+
+    render() {
+        return (
+            <>
+                <div className='home-header'>
+                    <div className='home-header-one'>
+                        <Link to="/gioi-thieu" style={{ color: 'black', textDecoration: 'none' }}>
+                            <a>GIỚI THIỆU</a>
+                        </Link>
+                    </div>
+                    <div className='home-header-two'>TẢI ỨNG DỤNG</div>
+// >>>>>>> 62f38491a0a832c8aa81b148bb594e15c3763b5f */}
                 </div>
                 <div className='home-header-banner'>
                     <Carousel>
