@@ -129,7 +129,7 @@ class News extends React.Component {
 }
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.admin.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn
     };
 };
 

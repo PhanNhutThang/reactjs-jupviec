@@ -95,7 +95,8 @@ class App extends Component {
                             <Switch>
                                 <Route path={path.HOME} exact component={(Home)} />
                                 <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
-                                <Route path={path.SYSTEM} component={userIsNotAuthenticated(System)} />
+                                {/* <Route path={path.SYSTEM} component={userIsNotAuthenticated(System)} /> */}
+                                <Route path={path.SYSTEM} component={System} />
                                 <Route path={path.HOMEPAGE} component={HomePage} />
                                 <Route path="/dich-vu-ve-sinh-sofa"><ServiceOne /></Route>
                                 <Route path="/dich-vu-ve-sinh-nha"><ServiceTwo /></Route>
@@ -131,7 +132,7 @@ class App extends Component {
 const mapStateToProps = state => {
     return {
         started: state.app.started,
-        isLoggedIn: state.admin.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn
     };
 };
 

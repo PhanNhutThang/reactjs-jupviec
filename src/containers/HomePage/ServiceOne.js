@@ -223,7 +223,7 @@
 // }
 // const mapStateToProps = state => {
 //     return {
-//         isLoggedIn: state.admin.isLoggedIn
+//         isLoggedIn: state.user.isLoggedIn
 //     };
 // };
 
@@ -460,7 +460,7 @@ class ServiceOne extends React.Component {
 }
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.admin.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn
     };
 };
 

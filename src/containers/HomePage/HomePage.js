@@ -8,18 +8,18 @@ class HomePage extends Component {
 
     render() {
         return (
-           <div>
-                <HomeHeader/>
-         
+            <div>
+                <HomeHeader />
+
                 {/* <div style={{height: '500px'}}> </div> */}
-           </div>
+            </div>
         );
     }
 }
 
-const mapStateToProps = state => { 
+const mapStateToProps = state => {
     return {
-        isLoggedIn: state.admin.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn
     };
 };
 
