@@ -88,15 +88,15 @@ class App extends Component {
             <BrowserRouter>
                 <div className="main-container">
                     <ConfirmModal />
-                    {this.props.isLoggedIn && <Header />}
+                    {/* {this.props.isLoggedIn && <Header />} */}
 
                     <div className="content-container">
                         <CustomScrollbars style={{ height: '100vh', width: '100%' }}>
                             <Switch>
                                 <Route path={path.HOME} exact component={(Home)} />
                                 <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
-                                {/* <Route path={path.SYSTEM} component={userIsNotAuthenticated(System)} /> */}
-                                <Route path={path.SYSTEM} component={System} />
+                                <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
+                                {/* <Route path={path.SYSTEM} component={System} /> */}
                                 <Route path={path.HOMEPAGE} component={HomePage} />
                                 <Route path="/dich-vu-ve-sinh-sofa"><ServiceOne /></Route>
                                 <Route path="/dich-vu-ve-sinh-nha"><ServiceTwo /></Route>

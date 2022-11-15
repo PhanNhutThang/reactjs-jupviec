@@ -28,9 +28,11 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root')
 function HomeHeader() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    // console.log('check userinfo: ', this.props.userInfo)
     // render() {
     return (
         <>
+
             <div className='home-header'>
                 <div className='home-header-one'>
                     <Link to="/gioi-thieu" style={{ color: 'black', textDecoration: 'none' }}>GIỚI THIỆU
@@ -259,7 +261,8 @@ class HomeHeader extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+
     };
 };
 
