@@ -132,7 +132,7 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-// export default function HomeHeader() {
+// export default function Homeheader() {
 //     const [modal, setModal] = useState(false);
 //     const toggleModal = () => {
 //         setModal(!modal);

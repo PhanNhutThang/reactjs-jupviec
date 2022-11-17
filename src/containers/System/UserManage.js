@@ -199,17 +199,81 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { getLoaitkService } from '../../services/userService';
+import * as actions from "../../store/actions";
+import './UserManage.scss';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
 class ProductManage extends Component {
 
-    state = {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            genderArr: [],
+            areaArr: [],
+            roleArr: [],
+            previewImgURL: '',
+            isOpen: false
+        }
     }
 
-    componentDidMount() {
+
+    async componentDidMount() {
+        this.props.getGenderStart();
+        this.props.getRoleStart();
+        this.props.getAreaStart();
+        // try {
+        //     let res = await getLoaitkService('gender');
+        //     if (res && res.errCode === 0) {
+        //         this.setState({
+        //             genderArr: res.data
+        //         })
+        //     }
+        // } catch (e) {
+        //     console.log(e)
+        // }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.genderRedux !== this.props.genderRedux) {
+            this.setState({
+                genderArr: this.props.genderRedux
+            })
+        }
+        if (prevProps.roleRedux !== this.props.roleRedux) {
+            this.setState({
+                roleArr: this.props.roleRedux
+            })
+        }
+        if (prevProps.areaRedux !== this.props.areaRedux) {
+            this.setState({
+                areaArr: this.props.areaRedux
+            })
+        }
+    }
+    handleOnChangeImage = (event) => {
+        let data = event.target.files;
+        let file = data[0];
+        if (file) {
+            let objectUrl = URL.createObjectURL(file);
+            this.setState({
+                previewImgURL: objectUrl
+            })
+        }
 
+    }
+    openPreviewImage = () => {
+        if (!this.state.previewImgURL) return;
+        this.setState({
+            isOpen: true
+        })
+    }
     render() {
+        console.log('thang', this.state)
+        let genders = this.state.genderArr;
+        let roles = this.state.roleArr;
+        let areas = this.state.areaArr;
+        let isLoadingGenderReact = this.props.isLoadingGender;
         return (
             <div className='user-redux-container'>
                 <div className='title'>
@@ -247,27 +311,57 @@ class ProductManage extends Component {
                             <div className='col-3'>
                                 <label>Gender</label>
                                 <select className='form-control'>
-                                    <option selected>chose...</option>
-                                    <option>....</option>
+                                    {genders && genders.length > 0 &&
+                                        genders.map((item, index) => {
+                                            return (
+                                                <option key={index}>{item.valueVi}</option>
+                                            )
+                                        })
+                                    }
+
+
                                 </select>
                             </div>
                             <div className='col-3'>
                                 <label>Area</label>
                                 <select className='form-control'>
-                                    <option selected>chose...</option>
-                                    <option>....</option>
+                                    {areas && areas.length > 0 &&
+                                        areas.map((item, index) => {
+                                            return (
+                                                <option key={index}>{item.valueVi}</option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </div>
                             <div className='col-3'>
                                 <label>RoleId</label>
                                 <select className='form-control'>
-                                    <option selected>chose...</option>
-                                    <option>....</option>
+                                    {roles && roles.length > 0 &&
+                                        roles.map((item, index) => {
+                                            return (
+                                                <option key={index}>{item.valueVi}</option>
+                                            )
+                                        })
+                                    }
                                 </select>
                             </div>
                             <div className='col-3'>
                                 <label>Image</label>
-                                <input className='form-control' type="text" />
+                                <div className='preview-img-container'>
+                                    <input id="previewImg" type="file" hidden
+                                        onChange={(event) => this.handleOnChangeImage(event)}
+
+                                    />
+                                    <label className='label-upload' htmlFor='previewImg'>Tải ảnh <i className='fas fa-upload'></i></label>
+                                    <div className='preview-image'
+                                        style={{ background: `url(${this.state.previewImgURL})` }}
+                                        onClick={() => this.openPreviewImage()}
+                                    >
+
+                                    </div>
+                                </div>
+
                             </div>
                             <div className='col-2 mt-3'>
                                 <button className='btn btn-primary'>Lưu</button>
@@ -276,7 +370,12 @@ class ProductManage extends Component {
                         </div>
                     </div>
                 </div>
-
+                {this.state.isOpen === true &&
+                    <Lightbox
+                        mainSrc={this.state.previewImgURL}
+                        onCloseRequest={() => this.setState({ isOpen: false })}
+                    />
+                }
             </div>
 
         )
@@ -286,11 +385,19 @@ class ProductManage extends Component {
 
 const mapStateToProps = state => {
     return {
+        genderRedux: state.admin.genders,
+        isLoadingGender: state.admin.isLoadingGender,
+        roleRedux: state.admin.roles,
+        areaRedux: state.admin.areas,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        getGenderStart: () => dispatch(actions.fetchGenderStart()),
+        getRoleStart: () => dispatch(actions.fetchRoleStart()),
+        getAreaStart: () => dispatch(actions.fetchAreaStart()),
+        // processLogout: () => dispatch(actions.processLogout()),
     };
 };
 
