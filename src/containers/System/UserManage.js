@@ -162,7 +162,7 @@
 //                                         <td>{item.address}</td>
 //                                         <td>{item.gender}</td>
 //                                         <td>{item.phone}</td>
-//                                         <td>{item.khuvuc}</td>
+//                                         <td>{item.area}</td>
 //                                         <td>{item.roleId}</td>
 //                                         <td>
 //                                             <button className='btn-edit' onClick={() => this.handleEditUser(item)}><i className='fas fa-pencil-alt'></i></button>
@@ -196,7 +196,399 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import React, { Component } from 'react';
+// import React, { Component, useState, useEffect } from 'react';
+// import { FormattedMessage } from 'react-intl';
+// import { connect } from 'react-redux';
+// import { getLoaitkService } from '../../services/userService';
+// import * as actions from "../../store/actions";
+// import './UserManage.scss';
+// import Lightbox from 'react-image-lightbox';
+// import 'react-image-lightbox/style.css';
+// import TableManageUser from './TableManageUser';
+// import { CRUD_ACTIONS } from "../../utils";
+// import PhoneInput from 'react-phone-input-2';
+// import { useFormik } from 'formik';
+// import * as Yup from "yup";
+
+
+
+// class UserManage extends Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             genderArr: [],
+//             areaArr: [],
+//             roleArr: [],
+//             previewImgURL: '',
+//             isOpen: false,
+
+//             email: '',
+//             password: '',
+//             firstName: '',
+//             lastName: '',
+//             phone: '',
+//             address: '',
+//             gender: '',
+//             role: '',
+//             area: '',
+//             avatar: '',
+
+//             action: '',
+//             userEditId: '',
+//         }
+//     }
+
+
+//     async componentDidMount() {
+//         this.props.getGenderStart();
+//         this.props.getRoleStart();
+//         this.props.getAreaStart();
+//     }
+
+//     componentDidUpdate(prevProps, prevState, snapshot) {
+//         if (prevProps.genderRedux !== this.props.genderRedux) {
+//             let arrGenders = this.props.genderRedux
+//             this.setState({
+//                 genderArr: arrGenders,
+//                 gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : ''
+//             })
+//         }
+//         if (prevProps.roleRedux !== this.props.roleRedux) {
+//             let arrRoles = this.props.roleRedux
+//             this.setState({
+//                 roleArr: arrRoles,
+//                 role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : ''
+//             })
+//         }
+//         if (prevProps.areaRedux !== this.props.areaRedux) {
+//             let arrAreas = this.props.areaRedux
+//             this.setState({
+//                 areaArr: arrAreas,
+//                 area: arrAreas && arrAreas.length > 0 ? arrAreas[0].key : ''
+//             })
+//         }
+//         if (prevProps.listUsers !== this.props.listUsers) {
+//             let arrGenders = this.props.genderRedux;
+//             let arrRoles = this.props.roleRedux;
+//             let arrAreas = this.props.areaRedux;
+//             this.setState({
+//                 email: '',
+//                 password: '',
+//                 firstName: '',
+//                 lastName: '',
+//                 phone: '',
+//                 address: '',
+//                 gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
+//                 role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
+//                 area: arrAreas && arrAreas.length > 0 ? arrAreas[0].key : '',
+//                 avatar: '',
+//                 action: CRUD_ACTIONS.CREATE,
+
+
+//             })
+//         }
+//     }
+//     handleOnChangeImage = (event) => {
+//         let data = event.target.files;
+//         let file = data[0];
+//         if (file) {
+//             let objectUrl = URL.createObjectURL(file);
+//             this.setState({
+//                 previewImgURL: objectUrl,
+//                 avatar: file
+//             })
+//         }
+
+//     }
+//     openPreviewImage = () => {
+//         if (!this.state.previewImgURL) return;
+//         this.setState({
+//             isOpen: true
+//         })
+//     }
+//     handleSaveUser = () => {
+
+//         let isValid = this.checkValidateInput()
+//         if (isValid === false) return;
+//         let { action } = this.state;
+//         if (action === CRUD_ACTIONS.CREATE) {
+//             this.props.createNewUser({
+//                 email: this.state.email,
+//                 password: this.state.password,
+//                 firstName: this.state.firstName,
+//                 lastName: this.state.lastName,
+//                 address: this.state.address,
+//                 gender: this.state.gender,
+//                 phone: this.state.phone,
+//                 area: this.state.area,
+//                 roleId: this.state.role,
+
+//             })
+//         }
+//         this.props.fetchUserRedux();
+//         if (action === CRUD_ACTIONS.EDIT) {
+//             this.props.editAUserRedux({
+//                 id: this.state.userEditId,
+//                 email: this.state.email,
+//                 password: this.state.password,
+//                 firstName: this.state.firstName,
+//                 lastName: this.state.lastName,
+//                 address: this.state.address,
+//                 gender: this.state.gender,
+//                 phone: this.state.phone,
+//                 area: this.state.area,
+//                 roleId: this.state.role,
+//                 //image: this.state.image
+//             })
+//         }
+//     }
+
+//     checkValidateInput = () => {
+//         let isValid = true;
+//         let arrCheck = ['email', 'password', 'firstName', 'lastName', 'phone', 'address']
+//         for (let i = 0; i < arrCheck.length; i++) {
+//             if (!this.state[arrCheck[i]]) {
+//                 isValid = false;
+//                 alert('This input is required: ' + arrCheck[i])
+//                 break;
+//             }
+//         }
+//         return isValid;
+//     }
+//     onChangeInput = (event, id) => {
+//         let copySate = { ...this.state }
+
+//         copySate[id] = event.target.value;
+
+//         this.setState({
+//             ...copySate
+//         }, () => {
+//             console.log('nhutthang check input onchange', this.state)
+//         })
+//     }
+//     handleEditUserFromParent = (user) => {
+//         console.log('nhutthang check edit: ', user)
+//         this.setState({
+//             email: user.email,
+//             password: 'hashpassword',
+//             firstName: user.firstName,
+//             lastName: user.lastName,
+//             phone: user.phone,
+//             address: user.address,
+//             gender: user.gender,
+//             role: user.roleId,
+//             area: user.area,
+//             avatar: '',
+//             action: CRUD_ACTIONS.EDIT,
+//             userEditId: user.id
+//         })
+//     }
+
+//     render() {
+//         console.log('thang', this.state)
+
+//         let genders = this.state.genderArr;
+//         let roles = this.state.roleArr;
+//         let areas = this.state.areaArr;
+//         let isLoadingGenderReact = this.props.isLoadingGender;
+
+//         let { isTrueVal, email, password, firstName, lastName, phone, address, gender, area, role, avatar } = this.state;
+
+//         return (
+//             <div className='user-redux-container'>
+//                 <div className='title'>
+//                     Quản lý Admin
+//                 </div>
+//                 <div className='user-redux-body'>
+//                     <div className='container'>
+//                         <div className='col-2 my-3'>Thêm mới người dùng</div>
+//                         <div className='row'>
+
+//                             <div className='col-3'>
+//                                 <label>Email</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+//                                 <input className='form-control' type="email"
+//                                     value={email}
+//                                     onChange={(event) => { this.onChangeInput(event, 'email') }}
+//                                     disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
+//                                 />
+//                             </div>
+//                             {/* <div className='col-3'>
+//                                 <label>Email</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+//                                 <input className='form-control' type="email"
+//                                     value={email}
+//                                     onChange={(event) => { this.onChangeInput(event, 'email'); this.changeEmail() }}
+
+//                                     disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
+//                                 />{!this.state.isTrueVal && (
+//                                     <div style={{ color: "#F61C04" }}>URL is not valid.</div>
+//                                 )}
+//                             </div> */}
+//                             <div className='col-3'>
+//                                 <label>Password</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+//                                 <input className='form-control' type="password"
+//                                     value={password}
+//                                     onChange={(event) => { this.onChangeInput(event, 'password') }}
+//                                     disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
+//                                 />
+//                             </div>
+//                             <div className='col-3'>
+//                                 <label>First Name</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+//                                 <input className='form-control' type="text"
+//                                     value={firstName}
+//                                     onChange={(event) => { this.onChangeInput(event, 'firstName') }}
+//                                 />
+//                             </div>
+//                             <div className='col-3'>
+//                                 <label>Last Name</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+//                                 <input className='form-control' type="text"
+//                                     value={lastName}
+//                                     onChange={(event) => { this.onChangeInput(event, 'lastName') }}
+//                                 />
+//                             </div>
+//                             <div className='col-3 mt-3'>
+//                                 <label>Phone Number</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+//                                 <input className='form-control' type="text"
+//                                     value={phone}
+//                                     onChange={(event) => { this.onChangeInput(event, 'phone') }}
+//                                 />
+//                             </div>
+//                             {/* <div className='col-3'>
+//                                 <PhoneInput
+//                                     defaultCountry="RU"
+//                                     value={value}
+//                                     onChange={setValue} />
+//                             </div> */}
+
+//                             <div className='col-9 mt-3'>
+//                                 <label>Address</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+//                                 <input className='form-control' type="text"
+//                                     value={address}
+//                                     onChange={(event) => { this.onChangeInput(event, 'address') }}
+//                                 />
+//                             </div>
+//                             <div className='col-3 mt-3'>
+//                                 <label>Gender</label>
+//                                 <select className='form-control'
+//                                     onChange={(event) => { this.onChangeInput(event, 'gender') }}
+//                                     value={gender}
+//                                 >
+//                                     {genders && genders.length > 0 &&
+//                                         genders.map((item, index) => {
+//                                             return (
+//                                                 <option key={index} value={item.key}>{item.valueVi}</option>
+//                                             )
+//                                         })
+//                                     }
+
+
+//                                 </select>
+//                             </div>
+//                             <div className='col-3 mt-3'>
+//                                 <label>Area</label>
+//                                 <select className='form-control'
+//                                     onChange={(event) => { this.onChangeInput(event, 'area') }}
+//                                     value={area}
+//                                 >
+//                                     {areas && areas.length > 0 &&
+//                                         areas.map((item, index) => {
+//                                             return (
+//                                                 <option key={index} value={item.key}>{item.valueVi}</option>
+//                                             )
+//                                         })
+//                                     }
+//                                 </select>
+//                             </div>
+//                             <div className='col-3 mt-3'>
+//                                 <label>RoleId</label>
+//                                 <select className='form-control'
+//                                     onChange={(event) => { this.onChangeInput(event, 'role') }}
+//                                     value={role}
+//                                 >
+//                                     {roles && roles.length > 0 &&
+//                                         roles.map((item, index) => {
+//                                             return (
+//                                                 <option key={index} value={item.key}>{item.valueVi}</option>
+//                                             )
+//                                         })
+//                                     }
+//                                 </select>
+//                             </div>
+//                             <div className='col-3 mt-3'>
+//                                 <label>Image</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+//                                 <div className='preview-img-container'>
+//                                     <input id="previewImg" type="file" hidden
+//                                         onChange={(event) => this.handleOnChangeImage(event)}
+
+//                                     />
+//                                     <label className='label-upload' htmlFor='previewImg'>Tải ảnh <i className='fas fa-upload'></i></label>
+//                                     <div className='preview-image'
+//                                         style={{ background: `url(${this.state.previewImgURL})` }}
+//                                         onClick={() => this.openPreviewImage()}
+//                                     >
+
+//                                     </div>
+//                                 </div>
+
+//                             </div>
+//                             <div className='col-12 my-3' >
+//                                 <button className={this.state.action === CRUD_ACTIONS.EDIT ? "btn btn-warning" : 'btn btn-primary'}
+//                                     onClick={() => this.handleSaveUser()} style={{ width: '200px' }}>
+//                                     {this.state.action === CRUD_ACTIONS.EDIT ? <p>Cập nhật</p> : <p>Lưu người dùng</p>}
+
+//                                 </button>
+//                             </div>
+//                             <div className='col-12 mb-5'>
+//                                 <TableManageUser
+//                                     handleEditUserFromParentKey={this.handleEditUserFromParent}
+//                                     action={this.state.action}
+//                                 />
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+
+//                 {this.state.isOpen === true &&
+//                     <Lightbox
+//                         mainSrc={this.state.previewImgURL}
+//                         onCloseRequest={() => this.setState({ isOpen: false })}
+//                     />
+//                 }
+//             </div>
+//         )
+//     }
+//     // class ProductManage extends Component {
+
+
+// }
+
+
+// const mapStateToProps = state => {
+//     return {
+//         genderRedux: state.admin.genders,
+//         isLoadingGender: state.admin.isLoadingGender,
+//         roleRedux: state.admin.roles,
+//         areaRedux: state.admin.areas,
+//         listUsers: state.admin.users
+//     };
+// };
+
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         getGenderStart: () => dispatch(actions.fetchGenderStart()),
+//         getRoleStart: () => dispatch(actions.fetchRoleStart()),
+//         getAreaStart: () => dispatch(actions.fetchAreaStart()),
+//         createNewUser: (data) => dispatch(actions.createNewUser(data)),
+//         fetchUserRedux: () => dispatch(actions.fetchAllUserStart()),
+//         editAUserRedux: (data) => dispatch(actions.editAUser(data))
+//         //processLogout: () => dispatch(actions.processLogout()),
+//     };
+// };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(UserManage);
+
+
+//88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888//
+import React, { Component, useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getLoaitkService } from '../../services/userService';
@@ -204,8 +596,39 @@ import * as actions from "../../store/actions";
 import './UserManage.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
-class ProductManage extends Component {
+import TableManageUser from './TableManageUser';
+import { CRUD_ACTIONS } from "../../utils";
+import PhoneInput from 'react-phone-input-2';
+import { useFormik } from 'formik';
+import * as Yup from "yup";
+import { constant } from 'lodash';
 
+
+const emailState = {
+    email: '',
+    errorMail: ''
+}
+const passwordSate = {
+    password: '',
+    errorPassword: ''
+}
+const phoneState = {
+    phone: '',
+    errorPhone: ''
+}
+const firstNameState = {
+    firstName: '',
+    errorfirstName: ''
+}
+const lastNameState = {
+    lastName: '',
+    errorlastName: ''
+}
+const addRessState = {
+    lastName: '',
+    erroraddRess: ''
+}
+class UserManage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -213,41 +636,82 @@ class ProductManage extends Component {
             areaArr: [],
             roleArr: [],
             previewImgURL: '',
-            isOpen: false
+            isOpen: false,
+
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            phone: '',
+            address: '',
+            gender: '',
+            role: '',
+            area: '',
+            avatar: '',
+
+            action: '',
+            userEditId: '',
         }
+        this.state = emailState;
+        this.state = passwordSate;
+        this.state = phoneState;
+        this.state = firstNameState;
+        this.state = lastNameState;
+        this.state = addRessState;
+
     }
-
-
     async componentDidMount() {
         this.props.getGenderStart();
         this.props.getRoleStart();
         this.props.getAreaStart();
-        // try {
-        //     let res = await getLoaitkService('gender');
-        //     if (res && res.errCode === 0) {
-        //         this.setState({
-        //             genderArr: res.data
-        //         })
-        //     }
-        // } catch (e) {
-        //     console.log(e)
-        // }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.genderRedux !== this.props.genderRedux) {
+            let arrGenders = this.props.genderRedux
             this.setState({
-                genderArr: this.props.genderRedux
+                genderArr: arrGenders,
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : ''
             })
         }
         if (prevProps.roleRedux !== this.props.roleRedux) {
+            let arrRoles = this.props.roleRedux
             this.setState({
-                roleArr: this.props.roleRedux
+                roleArr: arrRoles,
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : ''
             })
         }
         if (prevProps.areaRedux !== this.props.areaRedux) {
+            let arrAreas = this.props.areaRedux
             this.setState({
-                areaArr: this.props.areaRedux
+                areaArr: arrAreas,
+                area: arrAreas && arrAreas.length > 0 ? arrAreas[0].key : ''
+            })
+        }
+        if (prevProps.listUsers !== this.props.listUsers) {
+            let arrGenders = this.props.genderRedux;
+            let arrRoles = this.props.roleRedux;
+            let arrAreas = this.props.areaRedux;
+            this.setState({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                phone: '',
+                address: '',
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
+                area: arrAreas && arrAreas.length > 0 ? arrAreas[0].key : '',
+                avatar: '',
+                errorMail: '',
+                errorPassword: '',
+                errorPhone: '',
+                errorfirstName: '',
+                errorlastName: '',
+                erroraddRess: '',
+                action: CRUD_ACTIONS.CREATE,
+
+
             })
         }
     }
@@ -257,7 +721,8 @@ class ProductManage extends Component {
         if (file) {
             let objectUrl = URL.createObjectURL(file);
             this.setState({
-                previewImgURL: objectUrl
+                previewImgURL: objectUrl,
+                avatar: file
             })
         }
 
@@ -268,16 +733,390 @@ class ProductManage extends Component {
             isOpen: true
         })
     }
+    // handleSaveUser = () => {
+
+    //     let isValid = this.checkValidateInput()
+    //     if (isValid === false) return;
+    //     let { action } = this.state;
+    //     if (action === CRUD_ACTIONS.CREATE) {
+    //         this.props.createNewUser({
+    //             email: this.state.email,
+    //             password: this.state.password,
+    //             firstName: this.state.firstName,
+    //             lastName: this.state.lastName,
+    //             address: this.state.address,
+    //             gender: this.state.gender,
+    //             phone: this.state.phone,
+    //             area: this.state.area,
+    //             roleId: this.state.role,
+
+    //         })
+    //     }
+    //     this.props.fetchUserRedux();
+    //     if (action === CRUD_ACTIONS.EDIT) {
+    //         this.props.editAUserRedux({
+    //             id: this.state.userEditId,
+    //             email: this.state.email,
+    //             password: this.state.password,
+    //             firstName: this.state.firstName,
+    //             lastName: this.state.lastName,
+    //             address: this.state.address,
+    //             gender: this.state.gender,
+    //             phone: this.state.phone,
+    //             area: this.state.area,
+    //             roleId: this.state.role,
+    //             //image: this.state.image
+    //         })
+    //     }
+    // }
+    handleSaveUser = () => {
+
+
+        let { action } = this.state;
+        if (action === CRUD_ACTIONS.CREATE) {
+            let isValid = this.checkValidateInput()
+            if (isValid === false) return;
+            this.props.createNewUser({
+                email: this.state.email,
+                password: this.state.password,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                address: this.state.address,
+                gender: this.state.gender,
+                phone: this.state.phone,
+                area: this.state.area,
+                roleId: this.state.role,
+
+            })
+        }
+        // this.props.fetchUserRedux();
+        if (action === CRUD_ACTIONS.EDIT) {
+            let isValid1 = this.checkValidateEditInput()
+            if (isValid1 === false) return;
+            this.props.editAUserRedux({
+                id: this.state.userEditId,
+                email: this.state.email,
+                password: this.state.password,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                address: this.state.address,
+                gender: this.state.gender,
+                phone: this.state.phone,
+                area: this.state.area,
+                roleId: this.state.role,
+                //image: this.state.image
+            })
+        }
+    }
+
+
+    checkValidateInput = () => {
+        let isValid = true;
+        let arrCheck = ['email', 'password', 'firstName', 'lastName', 'phone', 'address']
+        console.log('check vali', isValid)
+        for (let i = 0; i < arrCheck.length; i++) {
+            if (!this.state[arrCheck[i]]) {
+                isValid = false;
+                alert('Vui lòng điền đầy đủ thông tin: ' + arrCheck[i])
+                break;
+            }
+            break;
+        }
+        for (let i = 0; i < arrCheck.length; i++) {
+            const regex = /^([a-zA-Z0-9_\.\-\+])+\@gmail+\.+com$/i;
+            if (!this.state.email) {
+                isValid = false;
+                this.setState({
+                    errorMail: "Vui lòng nhập email "
+                });
+                break;
+            }
+            if (!this.state.email || regex.test(this.state.email) === false) {
+                isValid = false;
+                this.setState({
+                    errorMail: "Bạn vui lòng kiểm tra email: VD:Example123@gmail.com"
+                });
+                break;
+            }
+            else {
+                this.setState({
+                    errorMail: ''
+                })
+            }
+            break;
+        }
+        for (let i = 0; i < arrCheck.length; i++) {
+            //const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/i;
+            const regex = /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/i;
+            if (!this.state.password) {
+                isValid = false;
+                this.setState({
+                    errorPassword: "Vui lòng nhập password "
+                });
+                break;
+            }
+            if (!this.state.password || regex.test(this.state.password) === false) {
+                isValid = false;
+                this.setState({
+                    errorPassword: "Tối thiểu 8 ký tự, ít nhất một chữ cái, một chữ in hoa, một số và một ký tự đặc biệt"
+                });
+                break;
+            }
+            else {
+                this.setState({
+                    errorPassword: ''
+                })
+            }
+            break;
+        }
+        for (let i = 0; i < arrCheck.length; i++) {
+            const regex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/i;
+            if (!this.state.phone) {
+                isValid = false;
+                this.setState({
+                    errorPhone: "Vui lòng nhập số điện thoại "
+                });
+                break;
+            }
+            if (!this.state.phone || regex.test(this.state.phone) === false) {
+                this.setState({
+                    errorPhone: "Số điện thoại không tồn tại"
+                });
+                break;
+            }
+            else {
+                this.setState({
+                    errorPhone: ''
+                })
+            }
+            break;
+        }
+        for (let i = 0; i < arrCheck.length; i++) {
+            const regex = /[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/i;
+            if (!this.state.firstName) {
+                isValid = false;
+                this.setState({
+                    errorfirstName: "Vui lòng nhập tên "
+                });
+                break;
+            }
+            if (!this.state.firstName || regex.test(this.state.firstName) === false) {
+                isValid = false;
+                this.setState({
+                    errorfirstName: "Tên không hợp lệ"
+                });
+                break;
+            }
+            else {
+                this.setState({
+                    errorfirstName: ''
+                })
+            }
+            break;
+        }
+        for (let i = 0; i < arrCheck.length; i++) {
+            const regex = /[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/i;
+            if (!this.state.lastName) {
+                isValid = false;
+                this.setState({
+                    errorlastName: "Vui lòng nhập họ "
+                });
+                break;
+            }
+            if (!this.state.lastName || regex.test(this.state.lastName) === false) {
+                isValid = false;
+                this.setState({
+                    errorlastName: "Họ không hợp lệ"
+                });
+                break;
+            }
+            else {
+                this.setState({
+                    errorlastName: ''
+                })
+            }
+            break;
+        }
+        for (let i = 0; i < arrCheck.length; i++) {
+            const regex = /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]*$/i;
+            if (!this.state.address) {
+                isValid = false;
+                this.setState({
+                    erroraddRess: "Vui lòng nhập địa chỉ "
+                });
+                break;
+            }
+            if (!this.state.address || regex.test(this.state.address) === false) {
+                isValid = false;
+                this.setState({
+                    erroraddRess: "Địa chỉ không hợp lệ (!@#~#$%^&*) không tồn tại"
+                });
+                break;
+            }
+            else {
+                this.setState({
+                    erroraddRess: ''
+                })
+            }
+            break;
+        }
+
+        return isValid;
+    }
+    ////////////////////////////////////////
+    checkValidateEditInput = () => {
+        let isValid1 = true;
+        let arrCheck = ['firstName', 'lastName', 'phone', 'address']
+        console.log('check vali', isValid1)
+        for (let i = 0; i < arrCheck.length; i++) {
+            if (!this.state[arrCheck[i]]) {
+                isValid1 = false;
+                alert('Vui lòng điền đầy đủ thông tin: ' + arrCheck[i])
+                break;
+            }
+            break;
+        }
+        for (let i = 0; i < arrCheck.length; i++) {
+            const regex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/i;
+            if (!this.state.phone) {
+                isValid1 = false;
+                this.setState({
+                    errorPhone: "Vui lòng nhập số điện thoại "
+                });
+                break;
+            }
+            if (!this.state.phone || regex.test(this.state.phone) === false) {
+                this.setState({
+                    errorPhone: "Số điện thoại không tồn tại"
+                });
+                break;
+            }
+            else {
+                this.setState({
+                    errorPhone: ''
+                })
+            }
+            break;
+        }
+        for (let i = 0; i < arrCheck.length; i++) {
+            const regex = /[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/i;
+            if (!this.state.firstName) {
+                isValid1 = false;
+                this.setState({
+                    errorfirstName: "Vui lòng nhập tên "
+                });
+                break;
+            }
+            if (!this.state.firstName || regex.test(this.state.firstName) === false) {
+                isValid1 = false;
+                this.setState({
+                    errorfirstName: "Tên không hợp lệ"
+                });
+                break;
+            }
+            else {
+                this.setState({
+                    errorfirstName: ''
+                })
+            }
+            break;
+        }
+        for (let i = 0; i < arrCheck.length; i++) {
+            const regex = /[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/i;
+            if (!this.state.lastName) {
+                isValid1 = false;
+                this.setState({
+                    errorlastName: "Vui lòng nhập họ "
+                });
+                break;
+            }
+            if (!this.state.lastName || regex.test(this.state.lastName) === false) {
+                isValid1 = false;
+                this.setState({
+                    errorlastName: "Họ không hợp lệ"
+                });
+                break;
+            }
+            else {
+                this.setState({
+                    errorlastName: ''
+                })
+            }
+            break;
+        }
+        for (let i = 0; i < arrCheck.length; i++) {
+            const regex = /[A-Za-z0-9'\.\-\s\,]/i;
+            if (!this.state.address) {
+                isValid1 = false;
+                this.setState({
+                    erroraddRess: "Vui lòng nhập địa chỉ "
+                });
+                break;
+            }
+            if (!this.state.address || regex.test(this.state.address) === false) {
+                isValid1 = false;
+                this.setState({
+                    erroraddRess: "Địa chỉ không hợp lệ (!@#~#$%^&*) không tồn tại"
+                });
+                break;
+            }
+            else {
+                this.setState({
+                    erroraddRess: ''
+                })
+            }
+            break;
+        }
+
+        return isValid1;
+    }
+    ////////////////////////////////////////
+    onChangeInput = (event, id, e) => {
+        let copySate = { ...this.state }
+
+        copySate[id] = event.target.value;
+
+        this.setState({
+            ...copySate
+        }, () => {
+            console.log('nhutthang check input onchange', this.state)
+        })
+        this.setState({
+            email: e.target.value
+        });
+    }
+    handleEditUserFromParent = (user) => {
+        console.log('nhutthang check edit: ', user)
+        this.setState({
+            email: user.email,
+            password: '*****',
+            firstName: user.firstName,
+            lastName: user.lastName,
+            phone: user.phone,
+            address: user.address,
+            gender: user.gender,
+            role: user.roleId,
+            area: user.area,
+            avatar: '',
+            action: CRUD_ACTIONS.EDIT,
+            userEditId: user.id
+        })
+    }
+
     render() {
         console.log('thang', this.state)
+
         let genders = this.state.genderArr;
         let roles = this.state.roleArr;
         let areas = this.state.areaArr;
         let isLoadingGenderReact = this.props.isLoadingGender;
+
+        let { isTrueVal, email, password, firstName, lastName, phone, address, gender, area, role, avatar } = this.state;
+
         return (
             <div className='user-redux-container'>
                 <div className='title'>
-                    Nhựt Thắng nè
+                    Quản lý Admin
                 </div>
                 <div className='user-redux-body'>
                     <div className='container'>
@@ -285,36 +1124,66 @@ class ProductManage extends Component {
                         <div className='row'>
 
                             <div className='col-3'>
-                                <label>Email</label>
-                                <input className='form-control' type="email" />
+                                <label>Email</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <input className='form-control' type="email"
+                                    value={this.state.email}
+                                    onChange={(event) => { this.onChangeInput(event, 'email') }}
+                                    disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
+                                /> <span className="text-danger">{this.state.errorMail}</span>
                             </div>
                             <div className='col-3'>
-                                <label>Password</label>
-                                <input className='form-control' type="password" />
+                                <label>Password</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <input className='form-control' type="text"
+                                    value={password}
+                                    onChange={(event) => { this.onChangeInput(event, 'password') }}
+                                    disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
+                                /><span className="text-danger">{this.state.errorPassword}</span>
                             </div>
                             <div className='col-3'>
-                                <label>First Name</label>
-                                <input className='form-control' type="text" />
+                                <label>First Name</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <input className='form-control' type="text"
+                                    value={firstName}
+                                    onChange={(event) => { this.onChangeInput(event, 'firstName') }}
+                                /><span className="text-danger">{this.state.errorfirstName}</span>
                             </div>
                             <div className='col-3'>
-                                <label>Last Name</label>
-                                <input className='form-control' type="text" />
+                                <label>Last Name</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <input className='form-control' type="text"
+                                    value={lastName}
+                                    onChange={(event) => { this.onChangeInput(event, 'lastName') }}
+                                /><span className="text-danger">{this.state.errorlastName}</span>
                             </div>
-                            <div className='col-3'>
-                                <label>Phone Number</label>
-                                <input className='form-control' type="text" />
+                            <div className='col-3 mt-3'>
+                                <label>Phone Number</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <input className='form-control' type="text"
+                                    value={phone}
+                                    onChange={(event) => { this.onChangeInput(event, 'phone') }}
+                                /><span className="text-danger">{this.state.errorPhone}</span>
                             </div>
-                            <div className='col-9'>
-                                <label>Address</label>
-                                <input className='form-control' type="text" />
+                            {/* <div className='col-3'>
+                                <PhoneInput
+                                    defaultCountry="RU"
+                                    value={value}
+                                    onChange={setValue} />
+                            </div> */}
+
+                            <div className='col-9 mt-3'>
+                                <label>Address</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <input className='form-control' type="text"
+                                    value={address}
+                                    onChange={(event) => { this.onChangeInput(event, 'address') }}
+                                /><span className="text-danger">{this.state.erroraddRess}</span>
                             </div>
-                            <div className='col-3'>
+                            <div className='col-3 mt-3'>
                                 <label>Gender</label>
-                                <select className='form-control'>
+                                <select className='form-control'
+                                    onChange={(event) => { this.onChangeInput(event, 'gender') }}
+                                    value={gender}
+                                >
                                     {genders && genders.length > 0 &&
                                         genders.map((item, index) => {
                                             return (
-                                                <option key={index}>{item.valueVi}</option>
+                                                <option key={index} value={item.key}>{item.valueVi}</option>
                                             )
                                         })
                                     }
@@ -322,32 +1191,38 @@ class ProductManage extends Component {
 
                                 </select>
                             </div>
-                            <div className='col-3'>
+                            <div className='col-3 mt-3'>
                                 <label>Area</label>
-                                <select className='form-control'>
+                                <select className='form-control'
+                                    onChange={(event) => { this.onChangeInput(event, 'area') }}
+                                    value={area}
+                                >
                                     {areas && areas.length > 0 &&
                                         areas.map((item, index) => {
                                             return (
-                                                <option key={index}>{item.valueVi}</option>
+                                                <option key={index} value={item.key}>{item.valueVi}</option>
                                             )
                                         })
                                     }
                                 </select>
                             </div>
-                            <div className='col-3'>
+                            <div className='col-3 mt-3'>
                                 <label>RoleId</label>
-                                <select className='form-control'>
+                                <select className='form-control'
+                                    onChange={(event) => { this.onChangeInput(event, 'role') }}
+                                    value={role}
+                                >
                                     {roles && roles.length > 0 &&
                                         roles.map((item, index) => {
                                             return (
-                                                <option key={index}>{item.valueVi}</option>
+                                                <option key={index} value={item.key}>{item.valueVi}</option>
                                             )
                                         })
                                     }
                                 </select>
                             </div>
-                            <div className='col-3'>
-                                <label>Image</label>
+                            <div className='col-3 mt-3'>
+                                <label>Image</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <div className='preview-img-container'>
                                     <input id="previewImg" type="file" hidden
                                         onChange={(event) => this.handleOnChangeImage(event)}
@@ -363,13 +1238,23 @@ class ProductManage extends Component {
                                 </div>
 
                             </div>
-                            <div className='col-2 mt-3'>
-                                <button className='btn btn-primary'>Lưu</button>
-                            </div>
+                            <div className='col-12 my-3' >
+                                <button className={this.state.action === CRUD_ACTIONS.EDIT ? "btn btn-warning" : 'btn btn-primary'}
+                                    onClick={() => this.handleSaveUser()} style={{ width: '200px' }}>
+                                    {this.state.action === CRUD_ACTIONS.EDIT ? <p>Cập nhật</p> : <p>Lưu người dùng</p>}
 
+                                </button>
+                            </div>
+                            <div className='col-12 mb-5'>
+                                <TableManageUser
+                                    handleEditUserFromParentKey={this.handleEditUserFromParent}
+                                    action={this.state.action}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 {this.state.isOpen === true &&
                     <Lightbox
                         mainSrc={this.state.previewImgURL}
@@ -377,11 +1262,13 @@ class ProductManage extends Component {
                     />
                 }
             </div>
-
         )
     }
+    // class ProductManage extends Component {
+
 
 }
+
 
 const mapStateToProps = state => {
     return {
@@ -389,6 +1276,7 @@ const mapStateToProps = state => {
         isLoadingGender: state.admin.isLoadingGender,
         roleRedux: state.admin.roles,
         areaRedux: state.admin.areas,
+        listUsers: state.admin.users
     };
 };
 
@@ -397,8 +1285,11 @@ const mapDispatchToProps = dispatch => {
         getGenderStart: () => dispatch(actions.fetchGenderStart()),
         getRoleStart: () => dispatch(actions.fetchRoleStart()),
         getAreaStart: () => dispatch(actions.fetchAreaStart()),
-        // processLogout: () => dispatch(actions.processLogout()),
+        createNewUser: (data) => dispatch(actions.createNewUser(data)),
+        fetchUserRedux: () => dispatch(actions.fetchAllUserStart()),
+        editAUserRedux: (data) => dispatch(actions.editAUser(data))
+        //processLogout: () => dispatch(actions.processLogout()),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductManage);
+export default connect(mapStateToProps, mapDispatchToProps)(UserManage);

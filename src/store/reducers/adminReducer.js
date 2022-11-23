@@ -4,7 +4,8 @@ const initialState = {
     isLoadingGender: false,
     genders: [],
     roles: [],
-    areas: []
+    areas: [],
+    users: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -21,7 +22,7 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
-        case actionTypes.FETCH_GENDER_FAIDED:
+        case actionTypes.FETCH_GENDER_FAILDED:
             state.isLoadingGender = false;
             state.genders = [];
             return {
@@ -32,7 +33,7 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
-        case actionTypes.FETCH_ROLE_FAIDED:
+        case actionTypes.FETCH_ROLE_FAILDED:
             state.roles = [];
             return {
                 ...state,
@@ -42,8 +43,18 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
             }
-        case actionTypes.FETCH_AREA_FAIDED:
+        case actionTypes.FETCH_AREA_FAILDED:
             state.areas = [];
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ALL_USER_SUCCESS:
+            state.users = action.users;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ALL_USER_FAILDED:
+            state.users = [];
             return {
                 ...state,
             }

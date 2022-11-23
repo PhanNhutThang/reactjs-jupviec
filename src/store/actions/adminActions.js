@@ -1,5 +1,6 @@
 import actionTypes from './actionTypes';
-import { getLoaitkService } from '../../services/userService';
+import { getLoaitkService, createNewUserService, getAllUsers, deleteUserService, editUserService } from '../../services/userService';
+import { toast } from 'react-toastify'
 
 // export const fetchGenderStart = () => ({
 //     type: actionTypes.FETCH_GENDER_START
@@ -30,7 +31,7 @@ export const fetchGenderSuccess = (genderData) => ({
 })
 
 export const fetchGenderFaided = () => ({
-    type: actionTypes.FETCH_GENDER_FAIDED
+    type: actionTypes.FETCH_GENDER_FAILDED
 })
 
 export const fetchRoleSuccess = (roleData) => ({
@@ -39,7 +40,7 @@ export const fetchRoleSuccess = (roleData) => ({
 })
 
 export const fetchRoleFaided = () => ({
-    type: actionTypes.FETCH_ROLE_FAIDED
+    type: actionTypes.FETCH_ROLE_FAILDED
 })
 
 
@@ -49,7 +50,7 @@ export const fetchAreaSuccess = (areaData) => ({
 })
 
 export const fetchAreaFaided = () => ({
-    type: actionTypes.FETCH_AREA_FAIDED
+    type: actionTypes.FETCH_AREA_FAILDED
 })
 
 export const fetchAreaStart = () => {
@@ -85,3 +86,112 @@ export const fetchRoleStart = () => {
         }
     }
 }
+
+export const createNewUser = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await createNewUserService(data);
+            if (res && res.errCode === 0) {
+                toast.success("Thêm mới người dùng thành công!");
+                dispatch(saveUserSuccess())
+                dispatch(fetchAllUserStart());
+            }
+            else {
+                dispatch(saveUserFailded());
+            }
+        } catch (e) {
+            dispatch(saveUserFailded());
+            console.log('saveUserFailded error', e)
+        }
+    }
+}
+export const saveUserSuccess = () => ({
+    type: actionTypes.CREATE_USER_SUCCESS
+})
+export const saveUserFailded = () => ({
+    type: actionTypes.CREATE_USER_FAILDED
+})
+
+export const fetchAllUserStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllUsers("ALL");
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllUserSuccess(res.users.reverse()))
+            }
+            else {
+                dispatch(fetchAllUserFaided());
+            }
+        } catch (e) {
+            dispatch(fetchAllUserFaided());
+            console.log('fetchAllUserFailded error', e)
+        }
+    }
+}
+
+export const fetchAllUserSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_USER_SUCCESS,
+    users: data
+
+})
+
+export const fetchAllUserFaided = (data) => ({
+    type: actionTypes.FETCH_ALL_USER_FAILDED
+})
+
+export const deleteAUser = (userId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await deleteUserService(userId);
+            if (res && res.errCode === 0) {
+                toast.success("Xoá người dùng thành công!");
+                dispatch(deleteUserSuccess());
+                dispatch(fetchAllUserStart());
+            }
+            else {
+                toast.error("Xoá người dùng thất bại!");
+                dispatch(deleteUserFailded());
+            }
+        } catch (e) {
+            toast.error("Xoá người dùng thất bại!");
+            dispatch(deleteUserFailded());
+            console.log('deleteUserFailded error', e)
+        }
+    }
+}
+export const deleteUserSuccess = () => ({
+    type: actionTypes.DELETE_USER_SUCCESS
+})
+
+export const deleteUserFailded = () => ({
+    type: actionTypes.DELETE_USER_FAILDED
+})
+
+export const editAUser = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await editUserService(data);
+            if (res && res.errCode === 0) {
+                toast.success("Cật nhật người dùng thành công!");
+                dispatch(editUserSuccess());
+                dispatch(fetchAllUserStart());
+            }
+            else {
+                toast.error("Cật nhật người dùng thất bại!");
+                dispatch(editUserFailded());
+            }
+        } catch (e) {
+            toast.error("Cật nhật người dùng thất bại!");
+            dispatch(editUserFailded());
+            console.log('editUserFailded error', e)
+        }
+    }
+}
+export const editUserSuccess = () => ({
+    type: actionTypes.EDIT_USER_SUCCESS,
+    // users: data
+})
+
+export const editUserFailded = () => ({
+    type: actionTypes.EDIT_USER_FAILDED
+})
