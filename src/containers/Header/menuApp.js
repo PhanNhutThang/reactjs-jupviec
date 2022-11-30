@@ -11,8 +11,11 @@ export const adminMenu = [
                 //     { name: 'menu.system.system-administrator.register-package-group-or-account', link: '/system/register-package-group-or-account' },
                 // ]
             },
+            // {
+            //     name: 'menu.admin.manage-staff', link: '/system/product-manage'
+            // },
             {
-                name: 'menu.admin.manage-staff', link: '/system/product-manage'
+                name: 'menu.admin.manage-staff', link: '/system/staff-manage'
             },
             {
                 name: 'menu.admin.manage-client', link: '/system/manage-client'
@@ -35,7 +38,7 @@ export const adminMenu = [
             },
         ]
     },
-    { //quản lý dịch vụ
+    { //thống kê báo cáo
         name: 'menu.admin.statistical',
         menus: [
             {
@@ -43,4 +46,5 @@ export const adminMenu = [
             },
         ]
     }
+
 ];

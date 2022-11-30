@@ -1,7 +1,7 @@
 // import React, { Component } from 'react';
 // import { FormattedMessage } from 'react-intl';
 // import { connect } from 'react-redux';
-// import './TableManageUser.scss';
+// import './TableStaffManage.scss';
 // import * as actions from "../../store/actions";
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 // import Form from 'react-bootstrap/Form';
@@ -9,7 +9,7 @@
 
 
 
-// class TableManageUser extends Component {
+// class TableStaffManage extends Component {
 
 //     constructor(props) {
 //         super(props);
@@ -51,7 +51,7 @@
 //         let arrUsers = this.state.usersRedux;
 //         return (
 //             <>
-//                 <table id='TableManageUser'>
+//                 <table id='TableStaffManage'>
 //                     <tbody>
 //                         <tr>
 //                             <th>Email</th>
@@ -131,54 +131,48 @@
 //     };
 // };
 
-// export default connect(mapStateToProps, mapDispatchToProps)(TableManageUser);
+// export default connect(mapStateToProps, mapDispatchToProps)(TableStaffManage);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import './TableManageUser.scss';
+import './TableStaffManage.scss';
 import * as actions from "../../store/actions";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import Form from 'react-bootstrap/Form';
 
-
-
-
-class TableManageUser extends Component {
+class TableStaffManage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            usersRedux: [],
+            staffsRedux: [],
 
         }
     }
     componentDidMount() {
-        this.props.fetchUserRedux();
+        this.props.fetchStaffRedux();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.listUsers !== this.props.listUsers) {
+        if (prevProps.listStaffs !== this.props.listStaffs) {
             this.setState({
-                usersRedux: this.props.listUsers
+                staffsRedux: this.props.listStaffs
             })
         }
     }
-    handleDeleteUser = (user) => {
-        this.props.deleteAUserRedux(user.id);
+    handleDeleteStaff = (staff) => {
+        this.props.deleteAStaffRedux(staff.id);
     }
-    handleEditUser = (user) => {
-        this.props.handleEditUserFromParentKey(user)
+    handleEditStaff = (staff) => {
+        this.props.handleEditStaffFromParentKey(staff)
     }
 
 
 
     render() {
-        let arrUsers = this.state.usersRedux;
+        let arrStaffs = this.state.staffsRedux;
         return (
             <>
-                <table id='TableManageClient'>
+                <table id='TableManageStaff'>
                     <tbody>
                         <tr>
                             <th>Email</th>
@@ -187,12 +181,11 @@ class TableManageUser extends Component {
                             <th>Address</th>
                             <th>Gender</th>
                             <th>Phone</th>
-                            <th>Area</th>
-                            <th>RoleId</th>
+                            <th>Salary</th>
                             <th>Action</th>
                         </tr>
-                        {arrUsers && arrUsers.length > 0 &&
-                            arrUsers.map((item, index) => {
+                        {arrStaffs && arrStaffs.length > 0 &&
+                            arrStaffs.map((item, index) => {
                                 return (
                                     <>
                                         <div class="container">
@@ -207,7 +200,7 @@ class TableManageUser extends Component {
                                                             Bạn có chắc chắn xoá người dùng này không ?
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button className="btn btn-danger" data-dismiss="modal" style={{ width: '40px' }} onClick={() => this.handleDeleteUser(item)}>OK</button>
+                                                            <button className="btn btn-danger" data-dismiss="modal" style={{ width: '40px' }} onClick={() => this.handleDeleteStaff(item)}>OK</button>
                                                             <button type="button" class="btn btn-danger" data-dismiss="modal" style={{ width: '60px' }}>CLOSE</button>
                                                         </div>
                                                     </div>
@@ -220,11 +213,10 @@ class TableManageUser extends Component {
                                             <td>{item.lastName}</td>
                                             <td>{item.address}</td>
                                             <td>{item.gender}</td>
-                                            <td>0{item.phone}</td>
-                                            <td>{item.area}</td>
-                                            <td>{item.roleId}</td>
+                                            <td>{item.phone}</td>
+                                            <td>{item.salary}</td>
                                             <td>
-                                                <button className='btn-edit' onClick={() => this.handleEditUser(item)}><i className='fas fa-pencil-alt'></i></button>
+                                                <button className='btn-edit' onClick={() => this.handleEditStaff(item)}><i className='fas fa-pencil-alt'></i></button>
                                                 {/* <button className='btn-delete' onClick={() => this.handleDeleteUser(item)} ><i className='fas fa-trash'></i></button> */}
                                                 <button className="btn-delete" data-toggle="modal" data-target="#myModal">
                                                     <i className='fas fa-trash'></i>
@@ -245,18 +237,18 @@ class TableManageUser extends Component {
 
 const mapStateToProps = state => {
     return {
-        listUsers: state.admin.users
+        listStaffs: state.staff.staffs
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchUserRedux: () => dispatch(actions.fetchAllUserStart()),
-        deleteAUserRedux: (id) => dispatch(actions.deleteAUser(id))
+        fetchStaffRedux: () => dispatch(actions.fetchAllStaffStart()),
+        deleteAStaffRedux: (id) => dispatch(actions.deleteAStaff(id))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableManageUser);
+export default connect(mapStateToProps, mapDispatchToProps)(TableStaffManage);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
