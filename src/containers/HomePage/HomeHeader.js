@@ -142,7 +142,7 @@ class HomeHeader extends Component {
                     <div className='home-header-two'>TẢI ỨNG DỤNG</div>
 // >>>>>>> 62f38491a0a832c8aa81b148bb594e15c3763b5f */}
                 </div>
-                <div className='home-header-banner'>
+                <div className='home-header-banner1'>
                     <Carousel>
                         <Carousel.Item>
                             <img

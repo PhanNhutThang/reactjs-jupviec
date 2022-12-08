@@ -182,14 +182,14 @@ class TableManageUser extends Component {
                     <tbody>
                         <tr>
                             <th>Email</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Address</th>
-                            <th>Gender</th>
-                            <th>Phone</th>
-                            <th>Area</th>
-                            <th>RoleId</th>
-                            <th>Action</th>
+                            <th>Họ</th>
+                            <th>Tên</th>
+                            <th>Địa chỉ</th>
+                            <th>Giới tính</th>
+                            <th>Số điện thoại</th>
+                            <th>Khu vực làm việc</th>
+                            <th>Quyền</th>
+                            <th></th>
                         </tr>
                         {arrUsers && arrUsers.length > 0 &&
                             arrUsers.map((item, index) => {
@@ -220,7 +220,7 @@ class TableManageUser extends Component {
                                             <td>{item.lastName}</td>
                                             <td>{item.address}</td>
                                             <td>{item.gender}</td>
-                                            <td>0{item.phone}</td>
+                                            <td>{item.phone}</td>
                                             <td>{item.area}</td>
                                             <td>{item.roleId}</td>
                                             <td>

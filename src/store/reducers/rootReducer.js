@@ -6,6 +6,7 @@ import userReducer from "./userReducer";
 import adminReducer from "./adminReducer";
 import clientReducer from "./clientRuducer";
 import staffReducer from "./staffReducer";
+import serviceReducer from "./serviceReducer";
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
@@ -32,5 +33,6 @@ export default (history) => combineReducers({
     admin: adminReducer,
     client: clientReducer,
     staff: staffReducer,
+    service: serviceReducer,
 })
 

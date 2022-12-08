@@ -51,6 +51,8 @@ import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
 import TableStaffManage from './TableStaffManage';
 import { CRUD_ACTIONS, CommonUtils } from "../../utils";
+import money from '../../assets/images/vnd.jpg';
+
 
 
 const emailState = {
@@ -60,26 +62,6 @@ const emailState = {
 const passwordSate = {
     password: '',
     errorPassword: ''
-}
-const phoneState = {
-    phone: '',
-    errorPhone: ''
-}
-const firstNameState = {
-    firstName: '',
-    errorfirstName: ''
-}
-const lastNameState = {
-    lastName: '',
-    errorlastName: ''
-}
-const addRessState = {
-    lastName: '',
-    erroraddRess: ''
-}
-const salaryState = {
-    salary: '',
-    errorsalary: ''
 }
 class StaffManage extends Component {
     constructor(props) {
@@ -104,14 +86,10 @@ class StaffManage extends Component {
             // evaluate: '',
             action: '',
             staffEditId: '',
+            isShowPassword: false,
         }
         this.state = emailState;
         this.state = passwordSate;
-        this.state = phoneState;
-        this.state = firstNameState;
-        this.state = lastNameState;
-        this.state = addRessState;
-        this.state = salaryState;
 
     }
     async componentDidMount() {
@@ -131,7 +109,7 @@ class StaffManage extends Component {
             let arrRoles = this.props.roleRedux
             this.setState({
                 roleArr: arrRoles,
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : ''
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[1].key : ''
             })
         }
 
@@ -230,7 +208,7 @@ class StaffManage extends Component {
 
     checkValidateInput = () => {
         let isValid = true;
-        let arrCheck = ['email', 'password', 'firstName', 'lastName', 'phone', 'address']
+        let arrCheck = ['email', 'password', 'firstName', 'lastName', 'phone', 'address', 'salary']
         console.log('check vali', isValid)
         for (let i = 0; i < arrCheck.length; i++) {
             if (!this.state[arrCheck[i]]) {
@@ -241,7 +219,7 @@ class StaffManage extends Component {
             break;
         }
         for (let i = 0; i < arrCheck.length; i++) {
-            const regex = /^([a-zA-Z0-9_\.\-\+])+\@gmail+\.+com$/i;
+            const regex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/i;
             if (!this.state.email) {
                 isValid = false;
                 this.setState({
@@ -252,7 +230,7 @@ class StaffManage extends Component {
             if (!this.state.email || regex.test(this.state.email) === false) {
                 isValid = false;
                 this.setState({
-                    errorMail: "Bạn vui lòng kiểm tra email: VD:Example123@gmail.com"
+                    errorMail: "Email không hợp lệ!"
                 });
                 break;
             }
@@ -379,6 +357,29 @@ class StaffManage extends Component {
             }
             break;
         }
+        // for (let i = 0; i < arrCheck.length; i++) {
+        //     const regex = /^\d+$/i;
+        //     if (!this.state.salary) {
+        //         isValid = false;
+        //         this.setState({
+        //             errorsalary: "Vui lòng nhập số lương "
+        //         });
+        //         break;
+        //     }
+        //     if (!this.state.salary || regex.test(this.state.salary) === false) {
+        //         isValid = false;
+        //         this.setState({
+        //             errorsalary: "Số lương không hợp lệ"
+        //         });
+        //         break;
+        //     }
+        //     else {
+        //         this.setState({
+        //             errorsalary: ''
+        //         })
+        //     }
+        //     break;
+        // }
 
         return isValid;
     }
@@ -504,13 +505,16 @@ class StaffManage extends Component {
         this.setState({
             email: e.target.value
         });
+        this.setState({
+            password: event.target.value
+        })
     }
     handleEditStaffFromParent = (staff) => {
 
         let imageBase64 = '';
         if (staff.image) {
 
-            // imageBase64 = new Buffer(staff.image, 'base64').toString('binary');
+            //imageBase64 = new Buffer(staff.image, 'base64').toString('binary');
 
         }
         this.setState({
@@ -531,7 +535,12 @@ class StaffManage extends Component {
             staffEditId: staff.id
         })
     }
+    handleShowHidePassword = (event) => {
+        this.setState({
+            isShowPassword: !this.state.isShowPassword
+        })
 
+    }
     render() {
         console.log('thang', this.state)
 
@@ -543,12 +552,12 @@ class StaffManage extends Component {
 
         return (
             <div className='user-redux-container'>
-                <div className='title'>
+                <div className='title' style={{ marginTop: '4%' }}>
                     Quản lý Nhân Viên
                 </div>
                 <div className='user-redux-body'>
                     <div className='container'>
-                        <div className='col-2 my-3'>Thêm mới nhân viên</div>
+                        <div className='col-5 my-3' style={{ marginLeft: '-5%', fontSize: '20px', color: 'blue' }}>Thêm mới nhân viên</div>
                         <div className='row'>
                             <div className='col-12'>{isLoadingGenderReact === true ? 'Loading genders' : ''}</div>
                             <div className='col-3'>
@@ -557,46 +566,54 @@ class StaffManage extends Component {
                                     value={this.state.email}
                                     onChange={(event) => { this.onChangeInput(event, 'email') }}
                                     disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
-                                /> <span className="text-danger">{this.state.errorMail}</span>
+                                /> <span className="text-black" style={{ fontSize: '12px', opacity: '0.7', fontStyle: 'italic' }}>{this.state.errorMail}</span>
                             </div>
                             <div className='col-3'>
-                                <label>Password</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
-                                <input className='form-control' type="text"
-                                    value={password}
-                                    onChange={(event) => { this.onChangeInput(event, 'password') }}
-                                    disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
-                                /><span className="text-danger">{this.state.errorPassword}</span>
+                                <label>Mật khẩu</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <div className='eye-password'>
+                                    <input className='form-control'
+                                        value={password}
+                                        type={this.state.isShowPassword ? 'text' : 'password'}
+                                        onChange={(event) => { this.onChangeInput(event, 'password') }}
+                                        disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
+                                    />
+                                    <span
+                                        onClick={() => { this.handleShowHidePassword() }}>
+                                        <i className={this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'} style={{ display: 'flex' }}></i>
+                                    </span>
+                                    <span className="text-black" style={{ fontSize: '12px', opacity: '0.7', fontStyle: 'italic' }}>{this.state.errorPassword}</span>
+                                </div>
                             </div>
                             <div className='col-3'>
-                                <label>First Name</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Họ</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={firstName}
                                     onChange={(event) => { this.onChangeInput(event, 'firstName') }}
-                                /><span className="text-danger">{this.state.errorfirstName}</span>
+                                />
                             </div>
                             <div className='col-3'>
-                                <label>Last Name</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Tên</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={lastName}
                                     onChange={(event) => { this.onChangeInput(event, 'lastName') }}
-                                /><span className="text-danger">{this.state.errorlastName}</span>
+                                />
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>Phone Number</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Số điện thoại</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={phone}
                                     onChange={(event) => { this.onChangeInput(event, 'phone') }}
-                                /><span className="text-danger">{this.state.errorPhone}</span>
+                                />
                             </div>
                             <div className='col-9 mt-3'>
-                                <label>Address</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Địa chỉ</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={address}
                                     onChange={(event) => { this.onChangeInput(event, 'address') }}
-                                /><span className="text-danger">{this.state.erroraddRess}</span>
+                                />
                             </div>
-                            <div className='col-3 mt-3'>
-                                <label>Gender</label>
+                            <div className='col-2 mt-3'>
+                                <label>Giới tính</label>
                                 <select className='form-control'
                                     onChange={(event) => { this.onChangeInput(event, 'gender') }}
                                     value={gender}
@@ -613,8 +630,8 @@ class StaffManage extends Component {
                                 </select>
                             </div>
 
-                            <div className='col-3 mt-3'>
-                                <label>RoleId</label>
+                            <div className='col-2 mt-3'>
+                                <label>Quyền</label>
                                 <select className='form-control'
                                     onChange={(event) => { this.onChangeInput(event, 'role') }}
                                     value={role}
@@ -629,22 +646,28 @@ class StaffManage extends Component {
                                 </select>
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>Salary</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
-                                <input className='form-control' type="text"
-                                    value={salary}
-                                    onChange={(event) => { this.onChangeInput(event, 'salary') }}
-                                /><span className="text-danger">{this.state.errorsalary}</span>
+                                <label>Lương</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <div className='money'>
+                                    <input className='form-control' type="text"
+                                        value={salary}
+                                        onChange={(event) => { this.onChangeInput(event, 'salary') }}
+                                    />
+                                    <span>
+                                        <img src={money} />
+                                    </span>
+                                    <span className="text-danger">{this.state.errorsalary}</span>
+                                </div>
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>Image</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
-                                <div className='preview-img-container'>
+                                <label>Ảnh đại diện</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <div className='preview-img-container1' style={{ height: '50px', width: '100%', backgroundSize: 'container' }}>
                                     <input id="previewImg" type="file" hidden
                                         onChange={(event) => this.handleOnChangeImage(event)}
 
                                     />
                                     <label className='label-upload' htmlFor='previewImg'>Tải ảnh <i className='fas fa-upload'></i></label>
-                                    <div className='preview-image'
-                                        style={{ background: `url(${this.state.previewImgURL})` }}
+                                    <div className='preview-image1'
+                                        style={{ background: `url(${this.state.previewImgURL})`, height: '100%', width: '100%' }}
                                         onClick={() => this.openPreviewImage()}
                                     >
 

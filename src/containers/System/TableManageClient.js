@@ -38,13 +38,13 @@ class TableManageClient extends Component {
                     <tbody>
                         <tr>
                             <th>Email</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Address</th>
-                            <th>Gender</th>
-                            <th>Phone</th>
-                            <th>RoleId</th>
-                            <th>Action</th>
+                            <th>Họ</th>
+                            <th>Tên</th>
+                            <th>Địa chỉ</th>
+                            <th>Giới tính</th>
+                            <th>Số điện thoại</th>
+                            <th>Quyền</th>
+                            <th></th>
                         </tr>
                         {arrClients && arrClients.length > 0 &&
                             arrClients.map((item, index) => {

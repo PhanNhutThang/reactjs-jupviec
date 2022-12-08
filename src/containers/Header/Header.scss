@@ -7,7 +7,11 @@
     background-color: $colormain;
     color: $common-text-color;
     height: 40px;
-    position: relative;
+    position: fixed;
+    right: 0px;
+    left: 0px;
+    //top: 0px;
+
 
     .btn-logout {
         color: $common-text-color;

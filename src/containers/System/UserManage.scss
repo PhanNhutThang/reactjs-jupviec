@@ -114,11 +114,22 @@
     }
 
     .preview-image {
-        height: 100px;
+        height: 50px;
         width: 100%;
         border: 1px solid red;
         background: center center no-repeat;
         background-size: contain;
+        cursor: pointer;
+    }
+}
+
+.eye-password {
+    position: relative;
+
+    i {
+        position: absolute;
+        right: 5px;
+        top: 10px;
         cursor: pointer;
     }
 }

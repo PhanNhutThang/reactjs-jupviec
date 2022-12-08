@@ -101,24 +101,50 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// 
-.preview-img-container {
+.preview-img-container1 {
     .label-upload {
         padding: 5px;
         border-radius: 3px;
         background: #ddd;
         cursor: pointer;
+        background-size: contain;
+        background: center center no-repeat;
 
         &:hover {
             opacity: 0.9;
         }
     }
 
-    .preview-image {
-        height: 100px;
+    .preview-image1 {
+        height: 50%;
         width: 100%;
-        border: 1px solid red;
+        border: 1px solid rgb(19, 196, 43);
         background: center center no-repeat;
         background-size: contain;
+        cursor: pointer;
+    }
+}
+
+.eye-password {
+    position: relative;
+
+    i {
+        position: absolute;
+        right: 5px;
+        top: 10px;
+        cursor: pointer;
+    }
+}
+
+.money {
+    position: relative;
+
+    img {
+        position: absolute;
+        right: 1px;
+        top: 1px;
+        width: 30px;
+        height: 30px;
         cursor: pointer;
     }
 }

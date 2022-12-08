@@ -14,7 +14,7 @@ class ServiceContractManage extends Component {
     render() {
         return (
             <div className='user-redux-container'>
-                <div className='title'>
+                <div className='title' style={{ marginTop: '3%' }}>
                     Quản lý hợp đồng dịch vụ
                 </div>
                 <div className='user-redux-body'>

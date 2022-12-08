@@ -644,7 +644,7 @@ class UserManage extends Component {
             role: '',
             area: '',
             avatar: '',
-
+            isShowPassword: false,
             action: '',
             userEditId: '',
         }
@@ -785,7 +785,7 @@ class UserManage extends Component {
             break;
         }
         for (let i = 0; i < arrCheck.length; i++) {
-            const regex = /^([a-zA-Z0-9_\.\-\+])+\@gmail+\.+com$/i;
+            const regex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/i;
             if (!this.state.email) {
                 isValid = false;
                 this.setState({
@@ -796,7 +796,7 @@ class UserManage extends Component {
             if (!this.state.email || regex.test(this.state.email) === false) {
                 isValid = false;
                 this.setState({
-                    errorMail: "Bạn vui lòng kiểm tra email: VD:Example123@gmail.com"
+                    errorMail: "Email không hợp lệ!"
                 });
                 break;
             }
@@ -1048,6 +1048,9 @@ class UserManage extends Component {
         this.setState({
             email: e.target.value
         });
+        this.setState({
+            password: event.target.value
+        })
     }
     handleEditUserFromParent = (user) => {
 
@@ -1073,7 +1076,12 @@ class UserManage extends Component {
             userEditId: user.id
         })
     }
+    handleShowHidePassword = (event) => {
+        this.setState({
+            isShowPassword: !this.state.isShowPassword
+        })
 
+    }
     render() {
         console.log('thang', this.state)
 
@@ -1086,12 +1094,12 @@ class UserManage extends Component {
 
         return (
             <div className='user-redux-container'>
-                <div className='title'>
-                    Quản lý Admin
+                <div className='title' style={{ marginTop: '4%' }}>
+                    Quản lý quản trị viên
                 </div>
                 <div className='user-redux-body'>
                     <div className='container'>
-                        <div className='col-2 my-3'>Thêm mới người dùng</div>
+                        <div className='col-5 my-3' style={{ marginLeft: '-5%', fontSize: '20px', color: 'blue' }}>Thêm mới người dùng</div>
                         <div className='row'>
                             <div className='col-12'>{isLoadingGenderReact === true ? 'Loading genders' : ''}</div>
                             <div className='col-3'>
@@ -1100,36 +1108,44 @@ class UserManage extends Component {
                                     value={this.state.email}
                                     onChange={(event) => { this.onChangeInput(event, 'email') }}
                                     disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
-                                /> <span className="text-danger">{this.state.errorMail}</span>
+                                /> <span className="text-black" style={{ fontSize: '12px', opacity: '0.7', fontStyle: 'italic' }}>{this.state.errorMail}</span>
                             </div>
                             <div className='col-3'>
-                                <label>Password</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
-                                <input className='form-control' type="text"
-                                    value={password}
-                                    onChange={(event) => { this.onChangeInput(event, 'password') }}
-                                    disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
-                                /><span className="text-danger">{this.state.errorPassword}</span>
+                                <label>Mật khẩu</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <div className='eye-password'>
+                                    <input className='form-control'
+                                        value={password}
+                                        type={this.state.isShowPassword ? 'text' : 'password'}
+                                        onChange={(event) => { this.onChangeInput(event, 'password') }}
+                                        disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
+                                    />
+                                    <span
+                                        onClick={() => { this.handleShowHidePassword() }}>
+                                        <i className={this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'} style={{ display: 'flex' }}></i>
+                                    </span>
+                                    <span className="text-black" style={{ fontSize: '12px', opacity: '0.7', fontStyle: 'italic' }} >{this.state.errorPassword}</span>
+                                </div>
                             </div>
                             <div className='col-3'>
-                                <label>First Name</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Họ</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={firstName}
                                     onChange={(event) => { this.onChangeInput(event, 'firstName') }}
-                                /><span className="text-danger">{this.state.errorfirstName}</span>
+                                />
                             </div>
                             <div className='col-3'>
-                                <label>Last Name</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Tên</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={lastName}
                                     onChange={(event) => { this.onChangeInput(event, 'lastName') }}
-                                /><span className="text-danger">{this.state.errorlastName}</span>
+                                />
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>Phone Number</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Số điện thoại</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={phone}
                                     onChange={(event) => { this.onChangeInput(event, 'phone') }}
-                                /><span className="text-danger">{this.state.errorPhone}</span>
+                                />
                             </div>
                             {/* <div className='col-3'>
                                 <PhoneInput
@@ -1139,14 +1155,14 @@ class UserManage extends Component {
                             </div> */}
 
                             <div className='col-9 mt-3'>
-                                <label>Address</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Địa chỉ</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={address}
                                     onChange={(event) => { this.onChangeInput(event, 'address') }}
-                                /><span className="text-danger">{this.state.erroraddRess}</span>
+                                />
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>Gender</label>
+                                <label>Giới tính</label>
                                 <select className='form-control'
                                     onChange={(event) => { this.onChangeInput(event, 'gender') }}
                                     value={gender}
@@ -1163,7 +1179,7 @@ class UserManage extends Component {
                                 </select>
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>Area</label>
+                                <label>Khu vực làm việc</label>
                                 <select className='form-control'
                                     onChange={(event) => { this.onChangeInput(event, 'area') }}
                                     value={area}
@@ -1178,7 +1194,7 @@ class UserManage extends Component {
                                 </select>
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>RoleId</label>
+                                <label>Quyền</label>
                                 <select className='form-control'
                                     onChange={(event) => { this.onChangeInput(event, 'role') }}
                                     value={role}
@@ -1193,7 +1209,7 @@ class UserManage extends Component {
                                 </select>
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>Image</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Ảnh đại diện</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <div className='preview-img-container'>
                                     <input id="previewImg" type="file" hidden
                                         onChange={(event) => this.handleOnChangeImage(event)}

@@ -729,7 +729,7 @@ class ClientManage extends Component {
             gender: '',
             role: '',
             avatar: '',
-
+            isShowPassword: false,
             action: '',
             clientEditId: '',
         }
@@ -758,7 +758,7 @@ class ClientManage extends Component {
             let arrRoles = this.props.roleRedux
             this.setState({
                 roleArr: arrRoles,
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : ''
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[2].key : ''
             })
         }
         if (prevProps.listClients !== this.props.listClients) {
@@ -772,7 +772,7 @@ class ClientManage extends Component {
                 phone: '',
                 address: '',
                 gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[2].key : '',
                 avatar: '',
                 errorMail: '',
                 errorPassword: '',
@@ -858,7 +858,7 @@ class ClientManage extends Component {
             break;
         }
         for (let i = 0; i < arrCheck.length; i++) {
-            const regex = /^([a-zA-Z0-9_\.\-\+])+\@gmail+\.+com$/i;
+            const regex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/i;
             if (!this.state.email) {
                 isValid = false;
                 this.setState({
@@ -869,7 +869,7 @@ class ClientManage extends Component {
             if (!this.state.email || regex.test(this.state.email) === false) {
                 isValid = false;
                 this.setState({
-                    errorMail: "Bạn vui lòng kiểm tra email: VD:Example123@gmail.com"
+                    errorMail: "Email không hợp lệ!"
                 });
                 break;
             }
@@ -1121,13 +1121,16 @@ class ClientManage extends Component {
         this.setState({
             email: e.target.value
         });
+        this.setState({
+            password: event.target.value
+        })
     }
     handleEditClientFromParent = (client) => {
 
         let imageBase64 = '';
         if (client.image) {
 
-            // imageBase64 = new Buffer(user.image, 'base64').toString('binary');
+            //imageBase64 = new Buffer(client.image, 'base64').toString('binary');
 
         }
         this.setState({
@@ -1145,7 +1148,12 @@ class ClientManage extends Component {
             clientEditId: client.id
         })
     }
+    handleShowHidePassword = (event) => {
+        this.setState({
+            isShowPassword: !this.state.isShowPassword
+        })
 
+    }
     render() {
         console.log('thang', this.state)
 
@@ -1157,12 +1165,12 @@ class ClientManage extends Component {
 
         return (
             <div className='user-redux-container'>
-                <div className='title'>
+                <div className='title' style={{ marginTop: '4%' }}>
                     Quản lý khách hàng
                 </div>
                 <div className='user-redux-body'>
                     <div className='container'>
-                        <div className='col-2 my-3'>Thêm mới khách hàng</div>
+                        <div className='col-5 my-3' style={{ marginLeft: '-5%', fontSize: '20px', color: 'blue' }}>Thêm mới khách hàng</div>
                         <div className='row'>
                             <div className='col-12'>{isLoadingGenderReact === true ? 'Loading genders' : ''}</div>
                             <div className='col-3'>
@@ -1171,47 +1179,55 @@ class ClientManage extends Component {
                                     value={this.state.email}
                                     onChange={(event) => { this.onChangeInput(event, 'email') }}
                                     disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
-                                /> <span className="text-danger">{this.state.errorMail}</span>
+                                /> <span className="text-black" style={{ fontSize: '12px', opacity: '0.7', fontStyle: 'italic' }}>{this.state.errorMail}</span>
                             </div>
                             <div className='col-3'>
-                                <label>Password</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
-                                <input className='form-control' type="text"
-                                    value={password}
-                                    onChange={(event) => { this.onChangeInput(event, 'password') }}
-                                    disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
-                                /><span className="text-danger">{this.state.errorPassword}</span>
+                                <label>Mật khẩu</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <div className='eye-password'>
+                                    <input className='form-control'
+                                        value={password}
+                                        type={this.state.isShowPassword ? 'text' : 'password'}
+                                        onChange={(event) => { this.onChangeInput(event, 'password') }}
+                                        disabled={this.state.action === CRUD_ACTIONS.EDIT ? true : false}
+                                    />
+                                    <span
+                                        onClick={() => { this.handleShowHidePassword() }}>
+                                        <i className={this.state.isShowPassword ? 'far fa-eye' : 'far fa-eye-slash'} style={{ display: 'flex' }}></i>
+                                    </span>
+                                    <span className="text-black" style={{ fontSize: '12px', opacity: '0.7', fontStyle: 'italic' }}>{this.state.errorPassword}</span>
+                                </div>
                             </div>
                             <div className='col-3'>
-                                <label>First Name</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Họ</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={firstName}
                                     onChange={(event) => { this.onChangeInput(event, 'firstName') }}
-                                /><span className="text-danger">{this.state.errorfirstName}</span>
+                                />
                             </div>
                             <div className='col-3'>
-                                <label>Last Name</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Tên</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={lastName}
                                     onChange={(event) => { this.onChangeInput(event, 'lastName') }}
-                                /><span className="text-danger">{this.state.errorlastName}</span>
+                                />
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>Phone Number</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Số điện thoại</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={phone}
                                     onChange={(event) => { this.onChangeInput(event, 'phone') }}
-                                /><span className="text-danger">{this.state.errorPhone}</span>
+                                />
                             </div>
 
                             <div className='col-9 mt-3'>
-                                <label>Address</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Địa chỉ</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <input className='form-control' type="text"
                                     value={address}
                                     onChange={(event) => { this.onChangeInput(event, 'address') }}
-                                /><span className="text-danger">{this.state.erroraddRess}</span>
+                                />
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>Gender</label>
+                                <label>Giới tính</label>
                                 <select className='form-control'
                                     onChange={(event) => { this.onChangeInput(event, 'gender') }}
                                     value={gender}
@@ -1228,7 +1244,7 @@ class ClientManage extends Component {
                                 </select>
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>RoleId</label>
+                                <label>Quyền</label>
                                 <select className='form-control'
                                     onChange={(event) => { this.onChangeInput(event, 'role') }}
                                     value={role}
@@ -1243,7 +1259,7 @@ class ClientManage extends Component {
                                 </select>
                             </div>
                             <div className='col-3 mt-3'>
-                                <label>Image</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
+                                <label>Ảnh đại diện</label>&ensp;<label style={{ color: 'red' }}>(*)</label>
                                 <div className='preview-img-container'>
                                     <input id="previewImg" type="file" hidden
                                         onChange={(event) => this.handleOnChangeImage(event)}
@@ -1262,7 +1278,7 @@ class ClientManage extends Component {
                             <div className='col-12 my-3' >
                                 <button className={this.state.action === CRUD_ACTIONS.EDIT ? "btn btn-warning" : 'btn btn-primary'}
                                     onClick={() => this.handleSaveClient()} style={{ width: '200px' }}>
-                                    {this.state.action === CRUD_ACTIONS.EDIT ? <p>Cập nhật</p> : <p>Lưu người dùng</p>}
+                                    {this.state.action === CRUD_ACTIONS.EDIT ? <p>Cập nhật khách hàng</p> : <p>Lưu khách hàng</p>}
 
                                 </button>
                             </div>

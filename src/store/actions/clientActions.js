@@ -163,7 +163,6 @@ export const editAClient = (data) => {
 }
 export const editClientSuccess = () => ({
     type: actionTypes.EDIT_CLIENT_SUCCESS,
-    // users: data
 })
 
 export const editClientFailded = () => ({

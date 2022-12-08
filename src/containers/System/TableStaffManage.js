@@ -176,13 +176,13 @@ class TableStaffManage extends Component {
                     <tbody>
                         <tr>
                             <th>Email</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Address</th>
-                            <th>Gender</th>
-                            <th>Phone</th>
-                            <th>Salary</th>
-                            <th>Action</th>
+                            <th>Họ</th>
+                            <th>Tên</th>
+                            <th>Địa chỉ</th>
+                            <th>Giới tính</th>
+                            <th>Số điên thoại</th>
+                            <th>Lương</th>
+                            <th></th>
                         </tr>
                         {arrStaffs && arrStaffs.length > 0 &&
                             arrStaffs.map((item, index) => {
